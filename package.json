@@ -17,11 +17,13 @@
     "@types/screenshot-desktop": "^1.12.0",
     "@types/selenium-webdriver": "^4.0.16",
     "@types/validator": "^13.7.1",
+    "@types/ws": "^8.2.3",
     "fs": "^0.0.1-security",
     "opencv4nodejs": "^5.6.0",
     "screenshot-desktop": "^1.12.7",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "ws": "^8.5.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.1",

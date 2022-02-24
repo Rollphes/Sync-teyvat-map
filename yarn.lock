@@ -115,15 +115,10 @@
   "resolved" "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   "version" "0.0.29"
 
-"@types/node@*", "@types/node@^15.12.1":
+"@types/node@*", "@types/node@^15.12.1", "@types/node@>6":
   "integrity" "sha512-qjd88DrCxupx/kJD5yQgZdcYKZKSIGBVDIBE1/LTGcNm3d2Np/jxojkdePDdfnBHJc5W7vSMpbJ1aB7p/Py69A=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-15.14.9.tgz"
   "version" "15.14.9"
-
-"@types/node@>6":
-  "integrity" "sha512-Y86MAxASe25hNzlDbsviXl8jQHb0RDvKt4c40ZJQ1Don0AAL0STLZSs4N+6gLEO55pedy7r2cLwS+ZDxPm/2Bw=="
-  "resolved" "https://registry.npmjs.org/@types/node/-/node-17.0.13.tgz"
-  "version" "17.0.13"
 
 "@types/screenshot-desktop@^1.12.0":
   "integrity" "sha512-jzYeXNOWXLTAUPnK1LV4AQNY5N0T45UTFAmxF5oYk9dFrkdtmFwQZRZ9+M2jOrDowQV5jrasEWPQLkGAf/yXNA=="
@@ -141,6 +136,13 @@
   "integrity" "sha512-I6OUIZ5cYRk5lp14xSOAiXjWrfVoMZVjDuevBYgQDYzZIjsf2CAISpEcXOkFAtpAHbmWIDLcZObejqny/9xq5Q=="
   "resolved" "https://registry.npmjs.org/@types/validator/-/validator-13.7.1.tgz"
   "version" "13.7.1"
+
+"@types/ws@^8.2.3":
+  "integrity" "sha512-ahRJZquUYCdOZf/rCsWg88S0/+cb9wazUBHv6HZEe3XdYaBe2zr/slM8J28X07Hn88Pnm4ezo7N8/ofnOgrPVQ=="
+  "resolved" "https://registry.npmjs.org/@types/ws/-/ws-8.2.3.tgz"
+  "version" "8.2.3"
+  dependencies:
+    "@types/node" "*"
 
 "@typescript-eslint/eslint-plugin@^4.28.1":
   "integrity" "sha512-aINiAxGVdOl1eJyVjaWn/YcVAq4Gi/Yo35qHGCnqbWVz61g39D0h23veY/MA0rFFGfxK7TySg2uwDeNv+JgVpg=="
@@ -1189,9 +1191,9 @@
   "version" "3.0.0"
 
 "signal-exit@^3.0.0":
-  "integrity" "sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ=="
-  "resolved" "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.6.tgz"
-  "version" "3.0.6"
+  "integrity" "sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ=="
+  "resolved" "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
+  "version" "3.0.7"
 
 "slash@^3.0.0":
   "integrity" "sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q=="
@@ -1403,6 +1405,11 @@
   "integrity" "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8="
   "resolved" "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz"
   "version" "1.0.2"
+
+"ws@^8.5.0":
+  "integrity" "sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg=="
+  "resolved" "https://registry.npmjs.org/ws/-/ws-8.5.0.tgz"
+  "version" "8.5.0"
 
 "yallist@^4.0.0":
   "integrity" "sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A=="
