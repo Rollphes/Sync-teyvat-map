@@ -2,6 +2,5 @@
 /.idea
 yarn-error.log
 package-lock.json
-src/map.png
 src/t.png
 AKAZEMatching.png

@@ -1,0 +1,16 @@
+{
+  "name": "テイワットマップ(同期)",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "description": "必ずNode側を起動してからサイトを開くこと",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://act.hoyolab.com/ys/app/interactive-map/index.html*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
+}

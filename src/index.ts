@@ -1,10 +1,10 @@
 import * as fs from 'fs'
-//https://www.npmjs.com/package/screenshot-desktop
 import * as cv from 'opencv4nodejs'
 import { Vec2 } from 'opencv4nodejs'
 import screenshot from 'screenshot-desktop'
 import { WebSocketServer } from 'ws'
 const akaze = new cv.AKAZEDetector()
+let result = ''
 async function findMap() {
   await screenshot({ filename: `${__dirname}/t.png` })
   const targetImgOri = await cv.imreadAsync(
@@ -19,33 +19,16 @@ async function findMap() {
     )
     .getRegion(region)
 
-  /*const mapImg = await cv.imreadAsync(
-    `${__dirname}/map.png`,
-    cv.IMREAD_GRAYSCALE
-  )*/
-
   const targetImgKeyPoints = await akaze.detectAsync(targetImg)
 
   const targetImgDescriptors = await akaze.computeAsync(
     targetImg,
     targetImgKeyPoints
   )
-  /*/
-  const mapImgKeyPoints = await akaze.detectAsync(mapImg)
-  const mapImgDescriptors = await akaze.computeAsync(mapImg, mapImgKeyPoints)
-  fs.writeFileSync(
-    'mapImgKeyPoints.dat',
-    JSON.stringify(mapImgKeyPoints),
-    'utf-8'
-  )
-  fs.writeFileSync(
-    'mapImgDescriptors.dat',
-    JSON.stringify(mapImgDescriptors.getDataAsArray()),
-    'utf-8'
-  )
-  /*/
   const mapImgKeyPoints0 = (
-    JSON.parse(fs.readFileSync('mapImgKeyPoints.dat', 'utf-8')) as cv.KeyPoint[]
+    JSON.parse(
+      fs.readFileSync(`${process.argv[2]}ImgKeyPoints.dat`, 'utf-8')
+    ) as cv.KeyPoint[]
   ).map(
     (key) =>
       new cv.KeyPoint(
@@ -58,14 +41,16 @@ async function findMap() {
       )
   )
   const mapImgDescriptors0 = new cv.Mat(
-    JSON.parse(fs.readFileSync('mapImgDescriptors.dat', 'utf-8')) as number[][],
+    JSON.parse(
+      fs.readFileSync(`${process.argv[2]}ImgDescriptors.dat`, 'utf-8')
+    ) as number[][],
     0
   )
 
   const bf = new cv.BFMatcher(cv.NORM_HAMMING2)
   const matches = bf.match(targetImgDescriptors, mapImgDescriptors0)
   if (matches.length === 0) {
-    console.log("don't have good match")
+    result = "don't match"
     return
   }
   const bestN = 40
@@ -115,7 +100,7 @@ async function findMap() {
     resultMatches.push(minMatches.descriptorMatchsJ)
   }
   if (resultMatches.length < 2) {
-    console.log('Dont match')
+    result = "don't match(filter)"
     return
   }
   resultMatches.slice(0, 2)
@@ -134,8 +119,8 @@ async function findMap() {
     ).norm()
 
   const mapVec2 = new Vec2(
-    230 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.x,
-    200 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.y
+    210 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.x,
+    190 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.y
   )
     .mul(mag)
     .add(
@@ -144,28 +129,20 @@ async function findMap() {
         mapImgKeyPoints0[resultMatches[0].trainIdx].pt.y
       )
     )
-  console.log(mag)
-  console.log(
-    new Vec2(
-      175 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.x,
-      175 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.y
-    )
-  )
-  console.log(mapVec2)
-  console.log()
+  const { x, y } = mapVec2 as Vec2
+  result = `center=${Math.floor((y - Number(process.argv[3])) * 100) / 100},${
+    Math.floor((x - Number(process.argv[4])) * 100) / 100
+  }`
 }
-/*
+
 const wss = new WebSocketServer({ port: 8080 })
 
 wss.on('connection', function connection(ws) {
   setInterval(() => {
-    ws.send('something')
-  }, 1000)
+    void findMap()
+    ws.send(result)
+  }, 2000)
 })
-*/
-setInterval(() => {
-  void findMap()
-}, 1000)
 
 interface MinMatches {
   minDeg: number
