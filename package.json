@@ -1,9 +1,10 @@
 {
-  "name": "genshin-json",
-  "version": "0.1.0",
+  "name": "sync-teyvat-map",
+  "version": "0.1.1",
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "setup": "ts-node -r tsconfig-paths/register src/createDat.ts",
     "lint": "eslint ."
   },
   "engines": {
