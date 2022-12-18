@@ -1,39 +1,81 @@
 {
   "name": "sync-teyvat-map",
-  "version": "0.1.1",
-  "main": "src/index.ts",
+  "version": "1.0.0",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/index.ts",
-    "setup": "ts-node -r tsconfig-paths/register src/createDat.ts",
-    "lint": "eslint ."
+    "electron-rebuild": "build-opencv --electron --nobuild rebuild",
+    "start": "tsc --build && electron-forge start",
+    "create-data": "tsc --build && electron dist/createDat.js",
+    "build-publish": "tsc --build && electron-builder --win --x64 --publish always",
+    "build": "tsc --build && electron-builder --win --x64"
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "keywords": [],
   "author": "Rollphes",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^15.12.1",
+    "@u4/opencv4nodejs": "^6.2.5",
+    "electron-log": "^4.4.8",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^5.3.0",
+    "fs": "^0.0.1-security",
+    "screenshot-desktop": "^1.12.7",
+    "typescript": "^4.9.4",
+    "update-electron-app": "^2.0.1",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.4",
+    "@electron-forge/maker-deb": "^6.0.4",
+    "@electron-forge/maker-rpm": "^6.0.4",
+    "@electron-forge/maker-squirrel": "^6.0.4",
+    "@electron-forge/maker-zip": "^6.0.4",
     "@types/screenshot-desktop": "^1.12.0",
     "@types/selenium-webdriver": "^4.0.16",
     "@types/validator": "^13.7.1",
     "@types/ws": "^8.2.3",
-    "fs": "^0.0.1-security",
-    "opencv4nodejs": "^5.6.0",
-    "screenshot-desktop": "^1.12.7",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.4",
-    "ws": "^8.5.0"
-  },
-  "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
+    "electron": "^22.0.0",
+    "electron-builder": "^23.6.0",
+    "electron-rebuild": "^3.2.9",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "node-loader": "^2.0.0",
     "prettier": "^2.3.2",
     "tsconfig-paths": "^3.9.0"
+  },
+  "build": {
+    "appId": "com.electron.test",
+    "productName": "パイモンが地図動かしてくれるヤツ",
+    "directories": {
+      "output": "release",
+      "buildResources": "assets"
+    },
+    "extraResources": [
+      "extensions",
+      "img",
+      "data"
+    ],
+    "files": [
+      "./dist/index.js"
+    ],
+    "win": {
+      "icon": "./img/app-icon.png",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Rollphes",
+      "repo": "Sync-teyvat-map"
+    }
   }
 }

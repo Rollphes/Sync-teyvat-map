@@ -1,0 +1,27 @@
+{
+  "name": "SyncTeyvatMap",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "description": "none",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://act.hoyolab.com/ys/app/interactive-map/index.html*"
+      ],
+      "js": [
+        "jquery-3.6.2.min.js",
+        "content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*"
+      ],
+      "matches": [
+        "*://act.hoyolab.com/*"
+      ]
+    }
+  ]
+}

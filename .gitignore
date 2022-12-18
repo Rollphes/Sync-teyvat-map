@@ -2,5 +2,10 @@
 /.idea
 yarn-error.log
 package-lock.json
-src/t.png
+resource/t.png
 AKAZEMatching.png
+.vscode
+.envrc
+release
+assets
+yarn.lock

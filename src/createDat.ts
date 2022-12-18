@@ -1,20 +1,21 @@
+import * as cv from '@u4/opencv4nodejs'
 import * as fs from 'fs'
-import * as cv from 'opencv4nodejs'
+const homePath = __dirname.split('dist')[0]
 const akaze = new cv.AKAZEDetector()
 async function createDatFile(name: string) {
   const mapImg = await cv.imreadAsync(
-    `${__dirname}/${name}.png`,
+    homePath + `/img/${name}.png`,
     cv.IMREAD_GRAYSCALE
   )
   const mapImgKeyPoints = await akaze.detectAsync(mapImg)
   const mapImgDescriptors = await akaze.computeAsync(mapImg, mapImgKeyPoints)
   fs.writeFileSync(
-    `${name}ImgKeyPoints.dat`,
+    homePath + `/data/${name}ImgKeyPoints.dat`,
     JSON.stringify(mapImgKeyPoints),
     'utf-8'
   )
   fs.writeFileSync(
-    `${name}ImgDescriptors.dat`,
+    homePath + `/data/${name}ImgDescriptors.dat`,
     JSON.stringify(mapImgDescriptors.getDataAsArray()),
     'utf-8'
   )
@@ -27,5 +28,6 @@ async function setup() {
   console.log('[3/3]create sougan Data...')
   await createDatFile(`sougan`)
   console.log('finish')
+  process.exit()
 }
 void setup()
