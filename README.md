@@ -7,46 +7,25 @@ GPUを使ってないのもそのせいです(ただの勉強不足)ｗ<br>
 もちろんTwitter(ユーザー名とID一緒です)やDiscordでも対応できます。<br>
 
 ## 動作環境
-・windows CPU:i7以上？<br>
+・windows CPU:i7以上(負荷は大体原神の半分程度です)<br>
 ・Chrome<br>
-・Nodejs v16.17.0<br>
-・npm v6.14.17<br>
-・git v2.38.1.windows.1<br>
+・ディスプレイの比率が16:9(16:10でも恐らく動く)<br>
+・原神をフルスクリーンでプレイしている事<br>
+・原神をメインディスプレイでプレイしている事<br>
 ※1:自分の環境はこれなので別バージョンでの動作は保証しません。<br>
-※2:実行時のメモリ消費量は約200MBです。
+※2:実行時のメモリ消費量は約600MBです。
 
 ## 導入方法
-まず、Node.jsとgitを使える環境にする必要があります。<br>
-これについてはググれば沢山出てきますので省きます。<br>
+[Releases](https://github.com/Rollphes/Sync-teyvat-map/releases)から最新バージョンをインストールするだけです。<br>
+[最新バージョンはコチラ](https://github.com/Rollphes/Sync-teyvat-map/releases/latest)<br>
 
+注意:WindowsによってPCが保護されましたという警告が出ます。詳細情報をクリックすれば実行ボタンが出てきますのでそちらから実行ください。<br>
 
-Node.jsの環境を整えたらこのレポジトリをご自分のPCにコピーしましょう。<br>
-コマンドプロンプトを起動させ、導入したい場所にcdで移動してください。<br>
-次に以下を実行してコピーしましょう。
-```
-git clone https://github.com/Rollphes/Sync-teyvat-map.git
-cd Sync-teyvat-map
-npm i
-```
-開発者向け:yarn addでも問題ありません。多分opencv4nodejsの導入が難しいと思います。
+尚、新バージョンが出た場合は自動で更新されます。
 
-次にchrome拡張機能を入れましょう。<br>
-`chrome://extensions/`にアクセスして拡張機能の設定画面を開きます。<br>
-`パッケージ化されていない拡張機能を読み込む`をクリックして、sync-teyvat-map-extensions.zipというファイルを読み込ませましょう。<br>
-`テイワットマップ(同期)0.1.0`という拡張機能が追加されたら成功です。<br>
 
 ## 実行方法
-1.まずはbatファイルを実行しましょう。<br>
-通常マップの場合は`start_map.bat`を実行<br>
-層岩巨淵の場合は`start_sougan.bat`を実行<br>
-淵下宮の場合は`start_enkanomiya.bat`を実行<br>
-
-2.[テイワットマップ](https://act.hoyolab.com/ys/app/interactive-map/index.html)を開きましょう。<br>
-注意点<br>
-・マップが読み込まれた後、少しスクロールする必要があります。<br>
-・2を実行してから1を実行するとうまく行きません。<br>
-・一度実行すると手動でスクロールは出来なくなるので注意してください。<br>
-
+起動するだけです。
 ## 仕組み(如何せん10ヶ月前のコードなのでほぼ忘れてます。)
 1.スクリーンショットをt.pngとして保管<br>
 2.datとして保管してあるマップデータ(setupスクリプト内でAKAZE特徴量と特徴記述を保管した者)とマッチング<br>
