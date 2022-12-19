@@ -125,7 +125,7 @@ const findMap = (dimension) => __awaiter(void 0, void 0, void 0, function* () {
         new opencv4nodejs_1.Vec2(targetImgKeyPoints[resultMatches[0].queryIdx].pt.x -
             targetImgKeyPoints[resultMatches[1].queryIdx].pt.x, targetImgKeyPoints[resultMatches[0].queryIdx].pt.y -
             targetImgKeyPoints[resultMatches[1].queryIdx].pt.y).norm();
-    const mapVec2 = new opencv4nodejs_1.Vec2(210 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.x, 190 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.y)
+    const mapVec2 = new opencv4nodejs_1.Vec2(300 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.x, 300 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.y)
         .mul(mag)
         .add(new opencv4nodejs_1.Vec2(mapImgKeyPoints0[resultMatches[0].trainIdx].pt.x, mapImgKeyPoints0[resultMatches[0].trainIdx].pt.y));
     const { x, y } = mapVec2;

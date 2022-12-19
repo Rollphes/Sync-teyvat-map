@@ -62,7 +62,7 @@
       "data"
     ],
     "files": [
-      "./dist/index.js"
+      "./dist/*"
     ],
     "win": {
       "icon": "./img/app-icon.png",

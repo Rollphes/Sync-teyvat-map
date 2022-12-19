@@ -153,8 +153,8 @@ const findMap = async (dimension: Dimension) => {
     ).norm()
 
   const mapVec2 = new Vec2(
-    210 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.x,
-    190 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.y
+    300 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.x,
+    300 - targetImgKeyPoints[resultMatches[0].queryIdx].pt.y
   )
     .mul(mag)
     .add(

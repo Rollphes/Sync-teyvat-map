@@ -1,11 +1,11 @@
 /node_modules
 /.idea
+yarn.lock
 yarn-error.log
 package-lock.json
-resource/t.png
+img/t.png
 AKAZEMatching.png
 .vscode
 .envrc
 release
 assets
-yarn.lock

@@ -8,7 +8,6 @@ let oldDimension = "2"
 let intervalId = setInterval(() => {}, 1000)
 
 const setUp = () =>{
-  $("a.menu-item").remove()
   setTimeout(() => {
     $("div.mhy-map__action-btns").append($.parseHTML(`
       <div id="user-guide-sync" class="mhy-map__action-btn mhy-map__action-btn--routes toggleSync">
@@ -36,10 +35,11 @@ const setUp = () =>{
     })
   }, 1000)
 }
-
-$(window).on('load',()=>setUp())
+setTimeout(setUp(),1000)
 
 setInterval(()=>{
+  $('a[href*="postList"]').remove()
+  $("div.bbs-qr").remove()
   const thisDimension = location.hash.slice(6, 7)
   if(thisDimension != oldDimension)setTimeout(setUp(),1000)
   oldDimension = thisDimension
@@ -48,15 +48,12 @@ setInterval(()=>{
 sock.addEventListener('open', (e) => {
   intervalId = setInterval(() => {
     sock.send(location.hash.slice(6, 7))
-    $("div.bbs-qr").remove()
   }, 2000)
 })
 
 sock.addEventListener('message', (e) => {
   if (!e.data.match(/center/g)||!location.hash.match(/center/g)) return
-  console.log(e.data)
   location.hash = location.hash.replace(/center=.*(?=&)/,e.data)
-  console.log(location.hash)
 })
 
 sock.addEventListener('close', (e) => {
