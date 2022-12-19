@@ -20,6 +20,10 @@ GPUを使ってないのもそのせいです(ただの勉強不足)ｗ<br>
 [最新バージョンはコチラ](https://github.com/Rollphes/Sync-teyvat-map/releases/latest)<br>
 
 注意:WindowsによってPCが保護されましたという警告が出ます。詳細情報をクリックすれば実行ボタンが出てきますのでそちらから実行ください。<br>
+Q:なんでこんなものが出てくるの？<br>
+A:コード証明をしてないからです。詳しい話はしませんが費用がかかる為、署名していません。<br>
+![image](https://user-images.githubusercontent.com/70063670/208462393-ca7a6da2-c2b3-4fe0-850e-484f735091d0.png)
+
 
 尚、新バージョンが出た場合は自動で更新されます。
 
