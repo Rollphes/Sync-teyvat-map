@@ -1,8 +1,12 @@
+import * as opencvBuild from '@u4/opencv-build'
 import * as cv from '@u4/opencv4nodejs'
 import { AKAZEDetector, Vec2 } from '@u4/opencv4nodejs'
 import * as fs from 'fs'
 import screenshot from 'screenshot-desktop'
 import { WebSocket, WebSocketServer } from 'ws'
+
+process.env.OPENCV_BIN_DIR = new opencvBuild.OpenCVBuildEnv().opencvBinDir
+process.env.path += ';' + new opencvBuild.OpenCVBuildEnv().opencvBinDir
 
 interface MinMatches {
   minDeg: number
@@ -15,11 +19,12 @@ interface Dimension {
   y: number
 }
 
-const akaze = new AKAZEDetector()
 const homePath = __dirname.split('dist')[0]
-const resourcesPath = homePath.split('app.asar')[0]
+const resourcesPath = homePath.split('app')[0]
 
+const akaze = new AKAZEDetector() //エラー箇所 恐らく opencvの導入ミス tryでエラーキャッチ不可
 const wss = new WebSocketServer({ port: 27900 })
+
 const dimensions: { [key in number]: Dimension } = {
   2: {
     name: 'map',
@@ -40,9 +45,9 @@ const dimensions: { [key in number]: Dimension } = {
 let clientDimension = '2'
 
 const findMap = async (dimension: Dimension) => {
-  await screenshot({ filename: resourcesPath + '/img/t.png' })
+  await screenshot({ filename: resourcesPath + 'img\\t.png' })
   const targetImgOri = await cv.imreadAsync(
-    resourcesPath + '/img/t.png',
+    resourcesPath + 'img\\t.png',
     cv.IMREAD_GRAYSCALE
   )
   const region = new cv.Rect(
@@ -62,7 +67,7 @@ const findMap = async (dimension: Dimension) => {
   const mapImgKeyPoints0 = (
     JSON.parse(
       fs.readFileSync(
-        resourcesPath + `/data/${dimension.name}ImgKeyPoints.dat`,
+        resourcesPath + `data\\${dimension.name}ImgKeyPoints.dat`,
         'utf-8'
       )
     ) as cv.KeyPoint[]
@@ -80,7 +85,7 @@ const findMap = async (dimension: Dimension) => {
   const mapImgDescriptors0 = new cv.Mat(
     JSON.parse(
       fs.readFileSync(
-        resourcesPath + `/data/${dimension.name}ImgDescriptors.dat`,
+        resourcesPath + `data\\${dimension.name}ImgDescriptors.dat`,
         'utf-8'
       )
     ) as number[][],

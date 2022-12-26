@@ -31,19 +31,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const child_process_1 = __importDefault(require("child_process"));
+const opencvBuild = __importStar(require("@u4/opencv-build"));
 const electron_1 = require("electron");
 const Log = __importStar(require("electron-log"));
 const electron_updater_1 = require("electron-updater");
-const homePath = __dirname.split('dist')[0];
-const resourcesPath = homePath.split('app.asar')[0];
-const server = child_process_1.default.fork(homePath + '/dist/server.js');
+const worker_threads_1 = require("worker_threads");
+process.env.OPENCV_BIN_DIR = new opencvBuild.OpenCVBuildEnv().opencvBinDir;
+process.env.path += ';' + new opencvBuild.OpenCVBuildEnv().opencvBinDir;
 Log.transports.file.level = 'info';
 electron_updater_1.autoUpdater.logger = Log;
+const homePath = __dirname.split('dist')[0];
+const resourcesPath = homePath.split('app')[0];
+const server = new worker_threads_1.Worker(homePath + 'dist\\server.js', {
+    env: {
+        OPENCV_BIN_DIR: new opencvBuild.OpenCVBuildEnv().opencvBinDir,
+        path: process.env.path,
+    },
+});
 process.on('uncaughtException', (err) => {
     Log.error(err);
     electron_1.app.quit();
@@ -53,7 +58,7 @@ if (require('electron-squirrel-startup') || !electron_1.app.requestSingleInstanc
     process.exit();
 }
 const deploy = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield electron_1.session.defaultSession.loadExtension(resourcesPath + '/extensions', {
+    yield electron_1.session.defaultSession.loadExtension(resourcesPath + 'extensions', {
         allowFileAccess: true,
     });
     const win = new electron_1.BrowserWindow({
@@ -108,7 +113,7 @@ electron_1.app.on('browser-window-created', (e, win) => {
 electron_1.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         electron_1.app.quit();
-        server.kill();
+        void server.terminate();
     }
 });
 //# sourceMappingURL=index.js.map

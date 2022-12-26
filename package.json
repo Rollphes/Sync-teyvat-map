@@ -1,13 +1,17 @@
 {
   "name": "sync-teyvat-map",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
+  "description": "パイモンが地図動かしてくれるヤツ",
   "scripts": {
-    "electron-rebuild": "build-opencv --electron --nobuild rebuild",
+    "opencv-rebuild": "build-opencv --electron build",
+    "electron-rebuild": "electron-rebuild -w opencv4nodejs",
     "start": "tsc --build && electron-forge start",
     "create-data": "tsc --build && electron dist/createDat.js",
     "build-publish": "tsc --build && electron-builder --win --x64 --publish always",
-    "build": "tsc --build && electron-builder --win --x64"
+    "build": "tsc --build && electron-builder --win --x64",
+    "postinstall": "electron-builder install-app-deps",
+    "install": "npm run electron-rebuild"
   },
   "engines": {
     "node": "18.x"
@@ -21,8 +25,9 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^5.3.0",
     "fs": "^0.0.1-security",
+    "node-loader": "^2.0.0",
+    "path": "^0.12.7",
     "screenshot-desktop": "^1.12.7",
-    "typescript": "^4.9.4",
     "update-electron-app": "^2.0.1",
     "ws": "^8.5.0"
   },
@@ -45,9 +50,10 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "node-loader": "^2.0.0",
+    "eslint-webpack-plugin": "^3.2.0",
     "prettier": "^2.3.2",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.9.4"
   },
   "build": {
     "appId": "com.electron.test",
@@ -56,13 +62,16 @@
       "output": "release",
       "buildResources": "assets"
     },
+    "asar": false,
     "extraResources": [
       "extensions",
       "img",
       "data"
     ],
     "files": [
-      "./dist/*"
+      "./dist/*",
+      "./node_modules",
+      "!./img/t.png"
     ],
     "win": {
       "icon": "./img/app-icon.png",
@@ -70,6 +79,7 @@
       "target": "nsis"
     },
     "nsis": {
+      "artifactName": "${productName}_setup_${version}.${ext}",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     },

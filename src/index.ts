@@ -1,14 +1,23 @@
-import child_process from 'child_process'
+import * as opencvBuild from '@u4/opencv-build'
 import { app, BrowserWindow, dialog, session, shell } from 'electron'
 import * as Log from 'electron-log'
 import { autoUpdater } from 'electron-updater'
+import { Worker } from 'worker_threads'
 
-const homePath = __dirname.split('dist')[0]
-const resourcesPath = homePath.split('app.asar')[0]
-const server = child_process.fork(homePath + '/dist/server.js')
+process.env.OPENCV_BIN_DIR = new opencvBuild.OpenCVBuildEnv().opencvBinDir
+process.env.path += ';' + new opencvBuild.OpenCVBuildEnv().opencvBinDir
 
 Log.transports.file.level = 'info'
 autoUpdater.logger = Log
+
+const homePath = __dirname.split('dist')[0]
+const resourcesPath = homePath.split('app')[0]
+const server = new Worker(homePath + 'dist\\server.js', {
+  env: {
+    OPENCV_BIN_DIR: new opencvBuild.OpenCVBuildEnv().opencvBinDir,
+    path: process.env.path,
+  },
+})
 
 process.on('uncaughtException', (err) => {
   Log.error(err)
@@ -21,7 +30,7 @@ if (require('electron-squirrel-startup') || !app.requestSingleInstanceLock()) {
 }
 
 const deploy = async () => {
-  await session.defaultSession.loadExtension(resourcesPath + '/extensions', {
+  await session.defaultSession.loadExtension(resourcesPath + 'extensions', {
     allowFileAccess: true,
   })
   const win = new BrowserWindow({
@@ -81,6 +90,6 @@ app.on('browser-window-created', (e, win) => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
-    server.kill()
+    void server.terminate()
   }
 })

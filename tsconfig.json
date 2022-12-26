@@ -79,5 +79,6 @@
     "node_modules",
     "extensions",
     "release",
+    "dist",
   ]
 }

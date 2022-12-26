@@ -35,14 +35,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const opencvBuild = __importStar(require("@u4/opencv-build"));
 const cv = __importStar(require("@u4/opencv4nodejs"));
 const opencv4nodejs_1 = require("@u4/opencv4nodejs");
 const fs = __importStar(require("fs"));
 const screenshot_desktop_1 = __importDefault(require("screenshot-desktop"));
 const ws_1 = require("ws");
-const akaze = new opencv4nodejs_1.AKAZEDetector();
+process.env.OPENCV_BIN_DIR = new opencvBuild.OpenCVBuildEnv().opencvBinDir;
+process.env.path += ';' + new opencvBuild.OpenCVBuildEnv().opencvBinDir;
 const homePath = __dirname.split('dist')[0];
-const resourcesPath = homePath.split('app.asar')[0];
+const resourcesPath = homePath.split('app')[0];
+const akaze = new opencv4nodejs_1.AKAZEDetector(); //エラー箇所 恐らく opencvの導入ミス tryでエラーキャッチ不可
 const wss = new ws_1.WebSocketServer({ port: 27900 });
 const dimensions = {
     2: {
@@ -63,14 +66,14 @@ const dimensions = {
 };
 let clientDimension = '2';
 const findMap = (dimension) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, screenshot_desktop_1.default)({ filename: resourcesPath + '/img/t.png' });
-    const targetImgOri = yield cv.imreadAsync(resourcesPath + '/img/t.png', cv.IMREAD_GRAYSCALE);
+    yield (0, screenshot_desktop_1.default)({ filename: resourcesPath + 'img\\t.png' });
+    const targetImgOri = yield cv.imreadAsync(resourcesPath + 'img\\t.png', cv.IMREAD_GRAYSCALE);
     const region = new cv.Rect(Math.floor(targetImgOri.cols * 0.03125), Math.floor(targetImgOri.rows * 0.01851), Math.floor(targetImgOri.cols * 0.10937), Math.floor(targetImgOri.cols * 0.10937));
     const targetImg = targetImgOri.getRegion(region).resize(600, 600);
     const targetImgKeyPoints = yield akaze.detectAsync(targetImg);
     const targetImgDescriptors = yield akaze.computeAsync(targetImg, targetImgKeyPoints);
-    const mapImgKeyPoints0 = JSON.parse(fs.readFileSync(resourcesPath + `/data/${dimension.name}ImgKeyPoints.dat`, 'utf-8')).map((key) => new cv.KeyPoint(new cv.Point2(key.pt.x, key.pt.y), key.size, key.angle, key.response, key.octave, key.class_id));
-    const mapImgDescriptors0 = new cv.Mat(JSON.parse(fs.readFileSync(resourcesPath + `/data/${dimension.name}ImgDescriptors.dat`, 'utf-8')), 0);
+    const mapImgKeyPoints0 = JSON.parse(fs.readFileSync(resourcesPath + `data\\${dimension.name}ImgKeyPoints.dat`, 'utf-8')).map((key) => new cv.KeyPoint(new cv.Point2(key.pt.x, key.pt.y), key.size, key.angle, key.response, key.octave, key.class_id));
+    const mapImgDescriptors0 = new cv.Mat(JSON.parse(fs.readFileSync(resourcesPath + `data\\${dimension.name}ImgDescriptors.dat`, 'utf-8')), 0);
     const bf = new cv.BFMatcher(cv.NORM_HAMMING2);
     const matches = bf.match(targetImgDescriptors, mapImgDescriptors0);
     if (matches.length === 0)
