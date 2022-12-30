@@ -6,10 +6,11 @@
   "scripts": {
     "opencv-rebuild": "build-opencv --electron build",
     "electron-rebuild": "electron-rebuild -w opencv4nodejs",
-    "start": "tsc --build && electron-forge start",
-    "create-data": "tsc --build && electron dist/createDat.js",
-    "build-publish": "tsc --build && electron-builder --win --x64 --publish always",
-    "build": "tsc --build && electron-builder --win --x64",
+    "start": "npm run compile && electron-forge start",
+    "create-data": "npm run compile && electron dist/createDat.js",
+    "build-publish": "npm run compile && electron-builder --win --x64 --publish always",
+    "build": "npm run compile && electron-builder --win --x64",
+    "compile": "tsc --build & javascript-obfuscator ./out --output ./dist",
     "postinstall": "electron-builder install-app-deps",
     "install": "npm run electron-rebuild"
   },
@@ -51,6 +52,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-webpack-plugin": "^3.2.0",
+    "javascript-obfuscator": "^4.0.0",
     "prettier": "^2.3.2",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.9.4"
