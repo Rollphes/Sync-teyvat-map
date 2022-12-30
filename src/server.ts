@@ -22,7 +22,7 @@ interface Dimension {
 const homePath = __dirname.split('dist')[0]
 const resourcesPath = homePath.split('app')[0]
 
-const akaze = new AKAZEDetector() //エラー箇所 恐らく opencvの導入ミス tryでエラーキャッチ不可
+const akaze = new AKAZEDetector()
 const wss = new WebSocketServer({ port: 27900 })
 
 const dimensions: { [key in number]: Dimension } = {
@@ -53,8 +53,8 @@ const findMap = async (dimension: Dimension) => {
   const region = new cv.Rect(
     Math.floor(targetImgOri.cols * 0.03125),
     Math.floor(targetImgOri.rows * 0.01851),
-    Math.floor(targetImgOri.cols * 0.10937),
-    Math.floor(targetImgOri.cols * 0.10937)
+    Math.floor(targetImgOri.rows * 0.19444),
+    Math.floor(targetImgOri.rows * 0.19444)
   )
   const targetImg = targetImgOri.getRegion(region).resize(600, 600)
 
