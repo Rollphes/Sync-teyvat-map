@@ -77,7 +77,6 @@
     ],
     "win": {
       "icon": "./img/app-icon.png",
-      "publisherName": "Rollphes",
       "target": "nsis"
     },
     "nsis": {
