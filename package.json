@@ -77,7 +77,8 @@
     ],
     "win": {
       "icon": "./img/app-icon.png",
-      "target": "nsis"
+      "target": "nsis",
+      "verifyUpdateCodeSignature": false
     },
     "nsis": {
       "artifactName": "${productName}_setup_${version}.${ext}",
