@@ -9,6 +9,7 @@ let intervalId = setInterval(() => {}, 1000)
 
 const setUp = () =>{
   setTimeout(() => {
+    $("div.mhy-map__action-btn--feedback").remove()
     $("div.mhy-map__action-btns").append($.parseHTML(`
       <div id="user-guide-sync" class="mhy-map__action-btn mhy-map__action-btn--routes toggleSync">
       <img src="${pauseSyncFlag?playImgURL:stopImgURL}" class="action-btn__btn-pic">
@@ -33,22 +34,22 @@ const setUp = () =>{
     $("div.DeveloperTwitter").on('click', ()=> {
       window.open('https://twitter.com/rollphes')
     })
-  }, 1000)
+  }, 2000)
 }
-setTimeout(setUp(),1000)
+setUp()
 
 setInterval(()=>{
   $('a[href*="postList"]').remove()
   $("div.bbs-qr").remove()
   const thisDimension = location.hash.slice(6, 7)
-  if(thisDimension != oldDimension)setTimeout(setUp(),1000)
+  if(thisDimension != oldDimension)setUp()
   oldDimension = thisDimension
 },1000)
 
 sock.addEventListener('open', (e) => {
-  intervalId = setInterval(() => {
+   intervalId = setInterval(() => {
     sock.send(location.hash.slice(6, 7))
-  }, 2000)
+   }, 2000)
 })
 
 sock.addEventListener('message', (e) => {
