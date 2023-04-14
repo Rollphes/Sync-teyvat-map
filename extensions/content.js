@@ -15,6 +15,10 @@ const setUp = () =>{
       <img src="${pauseSyncFlag?playImgURL:stopImgURL}" class="action-btn__btn-pic">
       <div class="tooltip tooltip--left">同期切替</div>
     </div>`))
+    $("body").append($.parseHTML(`
+      <div style="position:absolute;z-index:100;display: flex;align-items: center;height:100%;width:100%;justify-content: space-around;color: red;pointer-events: none;">
+        ●
+    </div>`))
     $("div.toggleSync").on('click', ()=> {
       pauseSyncFlag = pauseSyncFlag?false:true
       $("div.toggleSync").children("img").attr('src',pauseSyncFlag?playImgURL:stopImgURL)

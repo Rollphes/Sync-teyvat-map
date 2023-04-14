@@ -28,7 +28,7 @@ const wss = new WebSocketServer({ port: 27900 })
 const dimensions: { [key in number]: Dimension } = {
   2: {
     name: 'map',
-    x: 7002,
+    x: 7924,
     y: 1126,
   },
   7: {
